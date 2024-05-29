@@ -1,2 +1,2 @@
-export * from "./authentication/signIn.handler";
-export * from "./authentication/signUp.handler";
+export * from "./signIn.handler";
+export * from "./signUp.handler";
