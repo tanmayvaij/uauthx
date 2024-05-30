@@ -13,7 +13,7 @@ export const UserModel = model(
     },
     email: {
       required: true,
-      type: String
+      type: String,
     },
     password: {
       required: true,
@@ -21,7 +21,7 @@ export const UserModel = model(
     },
     joinedOn: {
       required: true,
-      type: String
-    }
+      type: String,
+    },
   })
 );
