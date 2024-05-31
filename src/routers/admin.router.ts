@@ -1,6 +1,6 @@
-import { Router } from "express" 
-import { createUserRole } from "../handlers/admin/createUserRole.handler"
+import { Router } from "express";
+import { createUserRole } from "../handlers/admin/createUserRole.handler";
 
-export const adminRouter = Router()
+export const adminRouter = Router();
 
-adminRouter.route("/create-user-role").post(createUserRole)
+adminRouter.route("/create-user-role").post(createUserRole);

@@ -6,6 +6,7 @@ export const UserRole = model(
     role: {
       type: String,
       required: true,
+      unique: true
     },
   })
 );
