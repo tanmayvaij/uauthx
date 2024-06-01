@@ -5,7 +5,9 @@ import { config } from "dotenv";
 import { rootRouter } from "./routers";
 import { connectToDatabase } from "./database";
 
-import { checkEnvVariables } from "./utils/inspectEnvFile";
+import { checkEnvVariables } from "./utils/checkEnvVariables";
+import { createDefaultUserRole } from "./utils/createDefaultUserRole";
+import { start } from "repl";
 
 config();
 
@@ -16,11 +18,18 @@ app.use(express.json());
 
 app.use("/", rootRouter);
 
-app.listen(5000, async () => {
+const startServer = async () => {
   try {
     checkEnvVariables();
-    connectToDatabase();
+    await connectToDatabase();
+    await createDefaultUserRole();
+
+    app.listen(5000, () => {
+      console.log("Server is running on port 5000");
+    });
   } catch (error) {
-    console.log(error);
+    console.error("Failed to start the server:", error);
   }
-});
+};
+
+startServer();
