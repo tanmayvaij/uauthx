@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { createUserRole } from "../handlers/admin/createUserRole.handler";
+import { createUserRole, getUserRoles } from "../handlers";
 
 export const adminRouter = Router();
 
 adminRouter.route("/create-user-role").post(createUserRole);
+adminRouter.route("/get-user-roles").get(getUserRoles);
