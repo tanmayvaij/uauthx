@@ -1,7 +1,7 @@
 import { shutdownServer } from "./shutdownServer";
 
 // Required env variables for the server
-const requiredEnvVariables = ["UAUTHX_ADMIN", "UAUTHX_PASSWORD", "MONGO_URI"];
+const requiredEnvVariables = ["MONGO_URI"];
 
 // Checking all required environment variables
 export const checkEnvVariables = () => {

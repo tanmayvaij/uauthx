@@ -2,23 +2,29 @@ import { Request, Response } from "express";
 import { User } from "../models";
 import { sign } from "jsonwebtoken";
 
-export const signUp = async (req: Request, res: Response) => {
+// Sign up request handler
+export const signUp = async (
+  req: Request<{}, {}, { email: string; password: string }>,
+  res: Response
+) => {
+  // Checking if already the given email exists is database or not
   const userExists = await User.findOne({ email: req.body.email });
 
+  // Throwing 409 Conflict error if the email is already found in database
   if (userExists)
     return res.status(409).json({
-      status: false,
-      message: `User with email id - ${req.body.email} already exists`,
+      isSucess: false,
+      error: `User with email id - ${req.body.email} already exists`,
     });
 
-  const createdUser = await User.create({
-    ...req.body,
-    joinedOn: new Date().toLocaleString(),
-  });
+  // If email does not exists then storing it in database
+  const createdUser = await User.create(req.body);
 
-  const payload = { userId: createdUser.id };
+  // Creating a payload
+  const payload = { userId: createdUser._id };
 
-  const authToken = sign(payload, process.env.JWT_SECRET!);
+  // Generating auth token
+  const authToken = sign(payload, process.env.SECRET_KEY!);
 
-  res.json({ status: true, authToken });
+  return res.json({ isSucess: true, authToken });
 };
