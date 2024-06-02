@@ -8,5 +8,8 @@ export const UserRole = model(
       required: true,
       unique: true
     },
+    roleAttributes: {
+      type: [Object]
+    }
   })
 );

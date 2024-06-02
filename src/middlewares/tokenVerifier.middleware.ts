@@ -22,16 +22,16 @@ export const tokenVerifier = (
   res: Response,
   next: NextFunction
 ) => {
-  const authToken = req.header("Authentication");
+  // const authToken = req.header("Authentication");
 
-  if (!authToken)
-    return res.json({ status: false, message: "Token not provided" });
+  // if (!authToken)
+  //   return res.json({ status: false, message: "Token not provided" });
 
-  try {
-    req.user = verify(authToken, process.env.JWT_SECRET!) as JwtPayload;
+  // try {
+  //   req.user = verify(authToken, process.env.JWT_SECRET!) as JwtPayload;
 
-    next();
-  } catch (err) {
-    return res.json({ status: false, message: "Invalid token provided" });
-  }
+  //   next();
+  // } catch (err) {
+  //   return res.json({ status: false, message: "Invalid token provided" });
+  // }
 };

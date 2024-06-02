@@ -4,7 +4,6 @@ import { UserRole } from "../../models";
 export const getUserRoles = async (_: Request, res: Response) => {
   try {
     const userRoles = await UserRole.find({}, { __v: 0 });
-
     return res.json({
       isSucess: true,
       userRoles,
