@@ -17,14 +17,17 @@ export const verifyToken = (
   next: NextFunction
 ) => {
   try {
-    // Receiving authToken from the headers
-    const authToken = req.header("Authentication");
+    // Receiving authorization from the headers
+    const authHeader = req.headers.authorization;
 
-    // Throwing 401 error is token is not provided in headers
-    if (!authToken)
+    // Throwing 401 error if authorization is not provided in headers
+    if (!authHeader)
       return res
         .status(401)
         .json({ isSucess: false, message: "Token not provided" });
+
+    // Trying to extract token from the bearer
+    const authToken = authHeader.split(" ")[1];
 
     // Attaching user id object with the request
     req.user = verify(authToken, process.env.SECRET_KEY!) as JwtPayload;
