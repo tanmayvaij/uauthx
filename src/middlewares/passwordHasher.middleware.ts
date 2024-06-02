@@ -6,11 +6,11 @@ export const passwordHasher = async (
   _: Response,
   next: NextFunction
 ) => {
-  // const salt = await genSalt(12);
+  const salt = await genSalt(12);
 
-  // const hashedPassword = await hash(req.body.password, salt);
+  const hashedPassword = await hash(req.body.password, salt);
 
-  // req.body.password = hashedPassword;
+  req.body.password = hashedPassword;
 
-  // next();
+  next();
 };
