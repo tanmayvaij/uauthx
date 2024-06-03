@@ -19,6 +19,6 @@ export const passwordHasher = async (
 
     next();
   } catch (error) {
-    return res.json({ isSucess: false, error });
+    return res.status(500).json({ isSuccess: false, error });
   }
 };

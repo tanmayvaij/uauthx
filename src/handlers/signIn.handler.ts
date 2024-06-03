@@ -8,32 +8,36 @@ export const signIn = async (
   req: Request<{}, {}, { email: string; password: string }>,
   res: Response
 ) => {
-  // Checking if the user with given email exists or not
-  const userExist = await User.findOne({ email: req.body.email });
+  try {
+    // Checking if the user with given email exists or not
+    const userExist = await User.findOne({ email: req.body.email });
 
-  // Throwing 404 not found error if user does not exist
-  if (!userExist)
-    return res
-      .status(404)
-      .json({ isSucess: false, error: "Invalid username or password" });
+    // Throwing 404 not found error if user does not exist
+    if (!userExist)
+      return res
+        .status(404)
+        .json({ isSuccess: false, error: "Invalid username or password" });
 
-  // Comparing the passwords
-  const passwordMatched = await compare(
-    req.body.password.trim(),
-    userExist.password
-  );
+    // Comparing the passwords
+    const passwordMatched = await compare(
+      req.body.password.trim(),
+      userExist.password
+    );
 
-  // Throwing 401 error if passwords not match
-  if (!passwordMatched)
-    return res
-      .status(401)
-      .json({ status: false, message: "Invalid username or password" });
+    // Throwing 401 error if passwords not match
+    if (!passwordMatched)
+      return res
+        .status(401)
+        .json({ status: false, message: "Invalid username or password" });
 
-  // Creating a payload
-  const payload = { userId: userExist._id };
+    // Creating a payload
+    const payload = { userId: userExist._id };
 
-  // Generating auth token
-  const authToken = sign(payload, process.env.SECRET_KEY!);
+    // Generating auth token
+    const authToken = sign(payload, process.env.SECRET_KEY!);
 
-  return res.json({ isSucess: true, authToken });
+    return res.json({ isSuccess: true, authToken });
+  } catch (error) {
+    return res.status(500).json({ isSuccess: false, error });
+  }
 };
